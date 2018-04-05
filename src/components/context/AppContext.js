@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Provider } from './context.core'
 import { fetchCities } from './http/cities';
 import { fetchFavs } from './http/favs';
+import { fetchCatfes } from './http/catfes';
 
 export default class AppContext extends Component {
   state = {
     searchCities: [],
-    favs: []
+    favs: [],
+    catfes: []
   }
 
   refreshFavs() {
-    fetchFavs().then(favs=>{
+    fetchFavs().then(favs => {
       this.setState({
         favs: favs
       });
@@ -25,6 +27,14 @@ export default class AppContext extends Component {
     });
   }
 
+  refreshCatfes(country, city) {
+    fetchCatfes(country, city).then(catfes => {
+      this.setState({
+        catfes: catfes
+      });
+    });
+  }
+
   render() {
     return (
       <Provider
@@ -33,6 +43,7 @@ export default class AppContext extends Component {
           actions: {
             refreshSearchCities: this.refreshSearchCities.bind(this),
             refreshFavs: this.refreshFavs.bind(this),
+            refreshCatfes: this.refreshCatfes.bind(this),
           }
         }}
       >

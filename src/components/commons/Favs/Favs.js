@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import FavCard from '../FavCard/FavCard';
 
-const styles = {
-};
+
+const styles = {};
 
 class Favs extends Component {
 
@@ -12,9 +14,18 @@ class Favs extends Component {
   }
 
   render() {
+    console.log(this.props.favs);
     return (
       <div>
-          {this.props.favs.length}
+        <Grid container spacing={24}>
+          { this.props.favs && this.props.favs.map(fav => {
+            return (
+              <Grid item xs={6} key={`fav-card-${fav.place_id}`}>
+                <FavCard fav={fav}/>
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -24,26 +24,20 @@ class Search extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, state, actions } = this.props;
     return (
       <div>
-        <Consumer>
-          {({ state, actions }) => (
-            <Fragment>
-              <div className={classes.citySearch}>
-                <CitySearch
-                  selectCity={this.selectCity.bind(this)}
-                  suggestions={state.searchCities}
-                  refreshSearchCities={actions.refreshSearchCities}
-                />
-                <Favs
-                  refreshFavs={actions.refreshFavs}
-                  favs={state.favs}
-                />
-              </div>
-            </Fragment>
-          )}
-        </Consumer>
+        <div className={classes.citySearch}>
+          <CitySearch
+            selectCity={this.selectCity.bind(this)}
+            suggestions={state.searchCities}
+            refreshSearchCities={actions.refreshSearchCities}
+          />
+          <Favs
+            refreshFavs={actions.refreshFavs}
+            favs={state.favs}
+          />
+        </div>
       </div>
     );
   }
@@ -53,4 +47,10 @@ Search.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(Search));
+const SearchComp = withRouter(withStyles(styles)(Search));
+
+export default props => (
+  <Consumer>
+    {({ state, actions }) => <SearchComp {...props} state={state} actions={actions} />}
+  </Consumer>
+);

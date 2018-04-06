@@ -4,7 +4,6 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import FavCard from '../FavCard/FavCard';
 
-
 const styles = {};
 
 class Favs extends Component {
@@ -14,17 +13,16 @@ class Favs extends Component {
   }
 
   render() {
-    console.log(this.props.favs);
+    const { favs } = this.props;
     return (
       <div>
         <Grid container spacing={24}>
-          { this.props.favs && this.props.favs.map(fav => {
-            return (
+          { favs && favs.map(fav => (
               <Grid item xs={6} key={`fav-card-${fav.place_id}`}>
                 <FavCard fav={fav}/>
               </Grid>
-            );
-          })}
+            )
+          )}
         </Grid>
       </div>
     );
